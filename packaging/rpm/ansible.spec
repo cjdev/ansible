@@ -114,6 +114,7 @@ rm -rf %{buildroot}
 
 %changelog
 
+<<<<<<< HEAD
 * Mon May 05 2014 Michael DeHaan <michael@ansible.com> - 1.6.0
 - Release 1.6.0
 
@@ -130,6 +131,12 @@ rm -rf %{buildroot}
 - Release 1.5.2
 
 * Mon Mar 10 2014 Michael DeHaan <michael@ansible.com> - 1.5.1
+=======
+* Fri Mar 11 2014 Michael DeHaan <michael@ansible.com> - 1.5.2
+- Release 1.5.2
+
+* Fri Mar 10 2014 Michael DeHaan <michael@ansible.com> - 1.5.1
+>>>>>>> version release bump for 1.5.2
 - Release 1.5.1
 
 * Fri Feb 28 2014 Michael DeHaan <michael@ansible.com> - 1.5.0
