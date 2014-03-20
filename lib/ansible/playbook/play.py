@@ -820,7 +820,7 @@ class Play(object):
         # Build an inject if this is a host run started by self.update_vars_files
         if host is not None:
             inject = {}
-            inject.update(self.playbook.inventory.get_variables(host, vault_password=vault_password))
+            inject.update(self.playbook.inventory.get_variables(host, pattern=self.hosts, vault_password=vault_password))
             inject.update(self.playbook.SETUP_CACHE.get(host, {}))
             inject.update(self.playbook.VARS_CACHE.get(host, {}))
         else:
