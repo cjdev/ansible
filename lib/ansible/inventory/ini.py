@@ -39,6 +39,7 @@ class InventoryParser(object):
             self.lines = fh.readlines()
             self.groups = {}
             self.hosts = {}
+            self.hostvars = {}
             self._parse()
 
     def _parse(self):
@@ -129,6 +130,7 @@ class InventoryParser(object):
                     else:
                         host = Host(name=hn, port=port)
                         self.hosts[hn] = host
+                    hostvars = self.hostvars.get(host, {})
                     if len(tokens) > 1:
                         for t in tokens[1:]:
                             if t.startswith('#'):
@@ -137,7 +139,16 @@ class InventoryParser(object):
                                 (k,v) = t.split("=", 1)
                             except ValueError, e:
                                 raise errors.AnsibleError("Invalid ini entry: %s - %s" % (t, str(e)))
-                            host.set_variable(k, self._parse_value(v))
+                            try:
+                                v = ast.literal_eval(v)
+                            except:
+                                v = v
+                                # most likely a string that literal_eval
+                                # doesn't like, so just set it
+                                host.set_variable(k,v)
+                            hostvars[k] = v
+                            host.set_variable(k, v)
+                    self.hostvars[host] = hostvars
                     self.groups[active_group_name].add_host(host)
 
     # [southeast:children]
@@ -195,4 +206,4 @@ class InventoryParser(object):
                     group.set_variable(k, self._parse_value(v))
 
     def get_host_variables(self, host):
-        return {}
+        return self.hostvars.get(host, {})
