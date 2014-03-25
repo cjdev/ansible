@@ -428,7 +428,6 @@ class Inventory(object):
         vars = utils.combine_vars(vars, pattern_vars)
         vars = utils.combine_vars(vars, plugin_vars)
         vars = utils.combine_vars(vars, host_vars)
-        print host_vars
 
         self._vars_per_host[hostkey] = vars
         return vars
